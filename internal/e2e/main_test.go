@@ -1,7 +1,7 @@
 package e2e
 
 import (
-	"log/slog"
+	"log"
 	"os"
 	"testing"
 
@@ -16,8 +16,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
-
-	godotenv.Load("./.env")
+	godotenv.Load("../../.env")
 
 	TenantID = os.Getenv("TENANT_ID")
 	ClientID = os.Getenv("CLIENT_ID")
@@ -25,8 +24,7 @@ func TestMain(m *testing.M) {
 	BaseURL = os.Getenv("BASE_URL")
 
 	if TenantID == "" || ClientID == "" || ClientSecret == "" || BaseURL == "" {
-		slog.Error("Missing config!")
-		os.Exit(1)
+		log.Fatal("Missing config!")
 	}
 
 	os.Exit(m.Run())

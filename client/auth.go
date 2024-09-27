@@ -15,16 +15,16 @@ import (
 // ErrTokenAuth is returned when the AuthClient cannot get a token.
 var ErrTokenAuth = errors.New("cannot retrieve auth token")
 
-// AuthClient is used to retrieve an AccessToken.
+// MSALClient is used to retrieve an AccessToken.
 // Implements the TokenGetter interface.
-type AuthClient struct {
+type MSALClient struct {
 	cca    confidential.Client
 	scopes []string
 	Logger *slog.Logger
 }
 
-// NewSecretAuthClient creates an [AuthClient] using a client secret.
-func NewSecretAuthClient(tenantID string, clientID string, clientSecret string) (*AuthClient, error) {
+// NewSecretAuthClient creates an [MSALClient] using a client secret.
+func NewSecretAuthClient(tenantID string, clientID string, clientSecret string) (*MSALClient, error) {
 	if tenantID == "" || clientID == "" || clientSecret == "" {
 		missing := []string{}
 		switch {
@@ -56,7 +56,7 @@ func NewSecretAuthClient(tenantID string, clientID string, clientSecret string) 
 	// Can have this as a config param if ever need to.
 	scopes := []string{"https://api.businesscentral.dynamics.com/.default"}
 
-	return &AuthClient{
+	return &MSALClient{
 		cca:    confidentialClient,
 		scopes: scopes,
 		Logger: slog.Default(),
@@ -65,7 +65,7 @@ func NewSecretAuthClient(tenantID string, clientID string, clientSecret string) 
 }
 
 // GetToken implements TokenGetter. It returns an access token.
-func (ac *AuthClient) GetToken(ctx context.Context) (string, error) {
+func (ac *MSALClient) GetToken(ctx context.Context) (string, error) {
 
 	ac.Logger.Debug("Acquiring token...")
 	result, err := ac.cca.AcquireTokenSilent(ctx, ac.scopes)
@@ -84,7 +84,7 @@ func (ac *AuthClient) GetToken(ctx context.Context) (string, error) {
 
 // Debug sets the logger to log at slog.LevelDebug.
 // If w is nil it defaults to os.Stdout.
-func (ac *AuthClient) Debug(w io.Writer) {
+func (ac *MSALClient) Debug(w io.Writer) {
 	var out io.Writer = os.Stdout
 	if w != nil {
 		out = w

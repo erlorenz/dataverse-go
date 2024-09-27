@@ -20,8 +20,8 @@ var (
 	ErrMissingConfig = errors.New("missing config")
 )
 
-// TokenGetter represents an auth client that gets a token.
-type TokenGetter interface {
+// AuthClient represents an auth client that gets a token.
+type AuthClient interface {
 	GetToken(context.Context) (string, error)
 }
 
@@ -60,14 +60,14 @@ func (c Config) Validate() error {
 type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
-	auth       TokenGetter
+	auth       AuthClient
 	userAgent  string
 }
 
 // ClientOption is an optional value that modifies the client.
 type ClientOption func(*Client)
 
-// NewClient returns an instance of Client. It creates an [AuthClient] internally that implements [TokenGetter].
+// NewClient returns an instance of Client. It creates an [MSALClient] internally that implements [AuthClient].
 // It takes a variadic set of [ClientOption].
 // Current provided options are [WithHTTPClient], [WithUserAgent], [WithAuthClient].
 func NewClient(config Config, options ...ClientOption) (*Client, error) {
@@ -115,8 +115,8 @@ func WithUserAgent(agent string) ClientOption {
 	}
 }
 
-// WithAuthClient sets the auth client that implements [TokenGetter].
-func WithAuthClient(client TokenGetter) ClientOption {
+// WithAuthClient sets the auth client that implements [AuthClient].
+func WithAuthClient(client AuthClient) ClientOption {
 	return func(c *Client) {
 		c.auth = client
 	}
