@@ -1,4 +1,4 @@
-package dataverse
+package dv
 
 import (
 	"encoding/json"

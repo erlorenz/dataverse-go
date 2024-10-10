@@ -1,4 +1,4 @@
-package dataverse_test
+package dv_test
 
 import (
 	"errors"
