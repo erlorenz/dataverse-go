@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"context"
@@ -60,7 +60,7 @@ func (t *Table[T]) GetByID(ctx context.Context, id string, opts QueryOptions) (T
 	if err != nil {
 		return row, err
 	}
-	return decodeRequestBody[T](resp)
+	return DecodeResponse[T](resp)
 }
 
 // GetByAltKey returns a table row by an alternate unique key.
@@ -76,7 +76,7 @@ func (t *Table[T]) GetByAltKey(ctx context.Context, key, value string, opts Quer
 	if err != nil {
 		return row, err
 	}
-	return decodeRequestBody[T](resp)
+	return DecodeResponse[T](resp)
 
 }
 
@@ -92,7 +92,7 @@ func (t *Table[T]) List(ctx context.Context, opts QueryOptions) ([]T, error) {
 		return nil, err
 	}
 
-	return decodeRequestBodyList[T](resp)
+	return DecodeResponseList[T](resp)
 }
 
 func (t *Table[T]) Update(ctx context.Context, id string, updateParams any, opts QueryOptions) (T, error) {

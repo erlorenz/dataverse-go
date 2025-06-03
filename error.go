@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"encoding/json"
@@ -15,6 +15,7 @@ const (
 )
 
 var ErrInvalidAPIError = errors.New("invalid api error format")
+var ErrAuthorizationError = errors.New("unauthorized")
 
 type apiErrorResponse struct {
 	Error struct {
@@ -37,6 +38,10 @@ func (err APIError) Error() string {
 func handleAPIError(resp *http.Response) error {
 
 	contentType := resp.Header.Get("Content-Type")
+
+	if resp.StatusCode == http.StatusUnauthorized {
+		return ErrAuthorizationError
+	}
 
 	if contentType != contentTypeJSON {
 		return fmt.Errorf("%w: status %d, content-type '%s'", ErrInvalidAPIError, resp.StatusCode, contentType)

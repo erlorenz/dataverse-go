@@ -54,7 +54,8 @@ func New(tenantID string, clientID string, clientSecret string) (*MSALClient, er
 
 	// Don't think there is any reason to use a different one.
 	// Can have this as a config param if ever need to.
-	scopes := []string{"https://api.businesscentral.dynamics.com/.default"}
+
+	scopes := []string{"https://manamed.api.crm.dynamics.com/.default"}
 
 	return &MSALClient{
 		cca:    confidentialClient,

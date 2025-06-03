@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"bytes"
@@ -45,7 +45,7 @@ func TestDecodeBody(t *testing.T) {
 	resp := &http.Response{}
 	resp.Body = io.NopCloser(bytes.NewReader(b))
 
-	got, err := decodeRequestBody[something](resp)
+	got, err := DecodeResponse[something](resp)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func TestDecodeListBody(t *testing.T) {
 
 	resp := &http.Response{StatusCode: http.StatusOK, Body: io.NopCloser(bytes.NewReader(respBodyBytes))}
 
-	got, err := decodeRequestBodyList[something](resp)
+	got, err := DecodeResponseList[something](resp)
 	if err != nil {
 		t.Fatal(err)
 	}

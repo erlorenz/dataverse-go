@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"cmp"
@@ -11,6 +11,10 @@ import (
 	"time"
 
 	"github.com/erlorenz/dataverse-go/internal/auth"
+)
+
+const (
+	headerAuthorization = "Authorization"
 )
 
 var (

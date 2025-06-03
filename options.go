@@ -1,9 +1,10 @@
-package dvclient
+package dataverse
 
 import (
 	"fmt"
 	"net/url"
 	"slices"
+	"strconv"
 	"strings"
 )
 
@@ -45,18 +46,20 @@ func (qo *QueryOptions) AddSelect(fields ...string) {
 func (qo *QueryOptions) ToParams() url.Values {
 	params := url.Values{}
 
-	switch {
-	case len(qo.Expand) > 0:
+	if len(qo.Expand) > 0 {
 		params.Set("$expand", strings.Join(qo.Expand, ","))
-		fallthrough
-	case qo.OrderBy != "":
+	}
+	if qo.OrderBy != "" {
 		params.Set("$orderby", qo.OrderBy)
-		fallthrough
-	case len(qo.Select) > 0:
+	}
+	if len(qo.Select) > 0 {
 		params.Set("$select", strings.Join(qo.Select, ","))
-		fallthrough
-	case len(qo.Filter) > 0:
+	}
+	if len(qo.Filter) > 0 {
 		params.Set("$filter", strings.Join(qo.Filter, " and "))
+	}
+	if qo.Top > 0 {
+		params.Set("$top", strconv.Itoa(qo.Top))
 	}
 
 	return params

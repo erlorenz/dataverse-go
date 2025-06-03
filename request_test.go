@@ -1,4 +1,4 @@
-package dvclient_test
+package dataverse_test
 
 import (
 	"context"
@@ -8,23 +8,23 @@ import (
 	"strings"
 	"testing"
 
-	dv "github.com/erlorenz/dataverse-go"
+	"github.com/erlorenz/dataverse-go"
 	"github.com/erlorenz/dataverse-go/internal/mock"
 	"github.com/google/go-cmp/cmp"
 )
 
 func TestNewRequest_GetBasic(t *testing.T) {
 
-	client, _ := dv.NewClient(dv.Config{
+	client, _ := dataverse.NewClient(dataverse.Config{
 		BaseURL:      "http://example.com",
 		TenantID:     "TENANT_ID",
 		ClientID:     "CLIENT_ID",
 		ClientSecret: "CLIENT_SECRET",
-	}, dv.WithAuthClient(&mock.AuthClient{}))
+	}, dataverse.WithAuthClient(&mock.AuthClient{}))
 
 	ctx := context.Background()
 
-	req, err := client.NewRequest(ctx, http.MethodGet, "/fake_resources", dv.QueryOptions{}, nil)
+	req, err := client.NewRequest(ctx, http.MethodGet, "/fake_resources", dataverse.QueryOptions{}, nil)
 	if err != nil {
 		t.Fatalf("expected no error, got %s", err)
 	}
@@ -35,7 +35,7 @@ func TestNewRequest_GetBasic(t *testing.T) {
 		t.Error(cmp.Diff(want, got))
 	}
 
-	authHeader := req.Header.Get("Authentication")
+	authHeader := req.Header.Get("Authorization")
 	if !strings.HasPrefix(authHeader, "Bearer ") {
 		t.Errorf("expected auth header to start with 'Bearer ', got %s", authHeader)
 	}
@@ -49,17 +49,17 @@ func TestNewRequest_GetBasic(t *testing.T) {
 }
 
 func TestNewRequest_GetWithOptions(t *testing.T) {
-	client, _ := dv.NewClient(dv.Config{
+	client, _ := dataverse.NewClient(dataverse.Config{
 		BaseURL:      "http://example.com",
 		TenantID:     "TENANT_ID",
 		ClientID:     "CLIENT_ID",
 		ClientSecret: "CLIENT_SECRET",
-	}, dv.WithAuthClient(&mock.AuthClient{}))
-	opts := dv.QueryOptions{}
+	}, dataverse.WithAuthClient(&mock.AuthClient{}))
+	opts := dataverse.QueryOptions{}
 	opts.AddExpand("field1")
 	opts.AddFilter("field1 eq 'something'")
 	opts.AddSelect("field1")
-	opts.SetOrderBy("field1", dv.OrderByDesc)
+	opts.SetOrderBy("field1", dataverse.OrderByDesc)
 
 	req, err := client.NewRequest(context.Background(), http.MethodGet, "/fake_resources", opts, nil)
 	if err != nil {
@@ -106,16 +106,16 @@ type sometype struct {
 }
 
 func TestNewRequest_Post(t *testing.T) {
-	client, _ := dv.NewClient(dv.Config{
+	client, _ := dataverse.NewClient(dataverse.Config{
 		BaseURL:      "http://example.com",
 		TenantID:     "TENANT_ID",
 		ClientID:     "CLIENT_ID",
 		ClientSecret: "CLIENT_SECRET",
-	}, dv.WithAuthClient(&mock.AuthClient{}))
+	}, dataverse.WithAuthClient(&mock.AuthClient{}))
 
 	data := sometype{"Fred", 10}
 
-	req, err := client.NewRequest(context.Background(), http.MethodPost, "/fake_resources", dv.QueryOptions{}, data)
+	req, err := client.NewRequest(context.Background(), http.MethodPost, "/fake_resources", dataverse.QueryOptions{}, data)
 	if err != nil {
 		t.Fatalf("expected no error, got %s", err)
 	}

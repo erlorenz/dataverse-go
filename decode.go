@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"encoding/json"
@@ -22,7 +22,8 @@ func extractIDFromCreateResponse(resp *http.Response) string {
 	return id
 }
 
-func decodeRequestBody[T Validator](resp *http.Response) (T, error) {
+// DecodeResponse decodes the body into [T] and provides the error handling.
+func DecodeResponse[T Validator](resp *http.Response) (T, error) {
 	var row T
 	defer resp.Body.Close()
 
@@ -37,7 +38,7 @@ func decodeRequestBody[T Validator](resp *http.Response) (T, error) {
 	return row, nil
 }
 
-func decodeRequestBodyList[T Validator](resp *http.Response) ([]T, error) {
+func DecodeResponseList[T Validator](resp *http.Response) ([]T, error) {
 	var listResponse tableListResponse[T]
 	defer resp.Body.Close()
 

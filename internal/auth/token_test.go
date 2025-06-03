@@ -1,14 +1,20 @@
-package e2e
+package auth_test
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/erlorenz/dataverse-go/internal/auth"
 )
 
 func TestGetToken(t *testing.T) {
-	authClient, err := auth.New(TenantID, ClientID, ClientSecret)
+
+	tenantID := os.Getenv("TENANT_ID")
+	clientID := os.Getenv("CLIENT_ID")
+	clientSecret := os.Getenv("CLIENT_SECRET")
+
+	authClient, err := auth.New(tenantID, clientID, clientSecret)
 	if err != nil {
 		t.Fatalf("expected no error, got %s", err)
 		t.Log(authClient)
@@ -22,4 +28,5 @@ func TestGetToken(t *testing.T) {
 	if token == "" {
 		t.Error("token is empty")
 	}
+
 }

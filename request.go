@@ -1,4 +1,4 @@
-package dvclient
+package dataverse
 
 import (
 	"bytes"
@@ -33,7 +33,8 @@ func (c *Client) NewRequest(ctx context.Context, method string, path string, opt
 
 	url := c.baseURL.JoinPath(path)
 
-	url.RawQuery = opts.ToParams().Encode()
+	urlValues := opts.ToParams()
+	url.RawQuery = urlValues.Encode()
 
 	var body io.Reader
 
@@ -51,7 +52,7 @@ func (c *Client) NewRequest(ctx context.Context, method string, path string, opt
 	}
 	req.Header.Set("Content-Type", contentTypeJSON)
 	req.Header.Set("Accept", contentTypeJSON)
-	req.Header.Set("Authentication", "Bearer "+token)
+	req.Header.Set(headerAuthorization, "Bearer "+token)
 	req.Header.Add("Prefer", preferFormattedValue)
 
 	if c.userAgent != "" {

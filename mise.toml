@@ -1,0 +1,10 @@
+[tasks.teste2e]
+run = "go test -v ./internal/e2e"
+
+
+[tasks.testauth]
+run = "go test -v ./internal/auth"
+
+
+[tasks.tidy]
+run = "go mod vendor && go mod tidy"

@@ -5,7 +5,6 @@ go 1.24.3
 require (
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.4.2
 	github.com/google/go-cmp v0.7.0
-	github.com/joho/godotenv v1.5.1
 )
 
 require (
