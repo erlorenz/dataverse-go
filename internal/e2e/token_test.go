@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	dataverse "github.com/erlorenz/dataverse-go/client"
+	"github.com/erlorenz/dataverse-go/internal/auth"
 )
 
 func TestGetToken(t *testing.T) {
-	authClient, err := dataverse.NewSecretAuthClient(TenantID, ClientID, ClientSecret)
+	authClient, err := auth.New(TenantID, ClientID, ClientSecret)
 	if err != nil {
 		t.Fatalf("expected no error, got %s", err)
 		t.Log(authClient)

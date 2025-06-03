@@ -3,7 +3,7 @@ package mock
 import (
 	"context"
 
-	dataverse "github.com/erlorenz/dataverse-go/client"
+	"github.com/erlorenz/dataverse-go/internal/auth"
 )
 
 type AuthClient struct {
@@ -12,7 +12,7 @@ type AuthClient struct {
 
 func (ma *AuthClient) GetToken(ctx context.Context) (string, error) {
 	if ma.ShouldFail {
-		return "", dataverse.ErrTokenAuth
+		return "", auth.ErrTokenAuth
 	}
 	return "SOME_TOKEN", nil
 }

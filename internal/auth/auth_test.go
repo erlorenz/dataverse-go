@@ -1,9 +1,9 @@
-package dv_test
+package auth_test
 
 import (
 	"testing"
 
-	dv "github.com/erlorenz/dataverse-go/client"
+	"github.com/erlorenz/dataverse-go/internal/auth"
 )
 
 var (
@@ -13,7 +13,7 @@ var (
 )
 
 func TestNewAuth(t *testing.T) {
-	_, err := dv.NewSecretAuthClient(fakeTenantID, fakeClientID, fakeClientSecret)
+	_, err := auth.New(fakeTenantID, fakeClientID, fakeClientSecret)
 	if err != nil {
 		t.Error(err)
 	}
@@ -23,7 +23,7 @@ func TestNewAuth_MissingInfo(t *testing.T) {
 	t.Parallel()
 
 	t.Run("TenantID", func(t *testing.T) {
-		_, err := dv.NewSecretAuthClient("", fakeClientID, fakeClientSecret)
+		_, err := auth.New("", fakeClientID, fakeClientSecret)
 		t.Log(err)
 		if err == nil {
 			t.Error("expected error, got nil")
@@ -31,7 +31,7 @@ func TestNewAuth_MissingInfo(t *testing.T) {
 	})
 
 	t.Run("ClientID", func(t *testing.T) {
-		_, err := dv.NewSecretAuthClient(fakeTenantID, "", fakeClientSecret)
+		_, err := auth.New(fakeTenantID, "", fakeClientSecret)
 		t.Log(err)
 		if err == nil {
 			t.Error("expected error, got nil")
@@ -39,7 +39,7 @@ func TestNewAuth_MissingInfo(t *testing.T) {
 	})
 
 	t.Run("ClientID", func(t *testing.T) {
-		_, err := dv.NewSecretAuthClient(fakeTenantID, fakeClientID, "")
+		_, err := auth.New(fakeTenantID, fakeClientID, "")
 		t.Log(err)
 		if err == nil {
 			t.Error("expected error, got nil")

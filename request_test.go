@@ -1,4 +1,4 @@
-package dv_test
+package dvclient_test
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	dv "github.com/erlorenz/dataverse-go/client"
+	dv "github.com/erlorenz/dataverse-go"
 	"github.com/erlorenz/dataverse-go/internal/mock"
 	"github.com/google/go-cmp/cmp"
 )

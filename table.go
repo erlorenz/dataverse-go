@@ -1,4 +1,4 @@
-package dv
+package dvclient
 
 import (
 	"context"

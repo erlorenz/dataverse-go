@@ -1,4 +1,4 @@
-package dv
+package auth
 
 import (
 	"context"
@@ -23,8 +23,8 @@ type MSALClient struct {
 	Logger *slog.Logger
 }
 
-// NewSecretAuthClient creates an [MSALClient] using a client secret.
-func NewSecretAuthClient(tenantID string, clientID string, clientSecret string) (*MSALClient, error) {
+// New creates an [MSALClient] using a client secret.
+func New(tenantID string, clientID string, clientSecret string) (*MSALClient, error) {
 	if tenantID == "" || clientID == "" || clientSecret == "" {
 		missing := []string{}
 		switch {

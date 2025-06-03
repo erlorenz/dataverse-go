@@ -1,4 +1,4 @@
-package dv
+package dvclient
 
 import (
 	"cmp"
@@ -9,6 +9,8 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/erlorenz/dataverse-go/internal/auth"
 )
 
 var (
@@ -88,7 +90,7 @@ func NewClient(config Config, options ...ClientOption) (*Client, error) {
 
 	// Set defaults
 	if client.auth == nil {
-		authClient, err := NewSecretAuthClient(config.TenantID, config.ClientID, config.ClientSecret)
+		authClient, err := auth.New(config.TenantID, config.ClientID, config.ClientSecret)
 		if err != nil {
 			return nil, err
 		}

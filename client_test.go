@@ -1,10 +1,10 @@
-package dv_test
+package dvclient_test
 
 import (
 	"errors"
 	"testing"
 
-	dataverse "github.com/erlorenz/dataverse-go/client"
+	dataverse "github.com/erlorenz/dataverse-go"
 )
 
 func TestNewClient(t *testing.T) {

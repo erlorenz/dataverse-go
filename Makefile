@@ -1,5 +1,5 @@
 testunit:
-	go test ./client
+	go test . && go test ./internal/auth
 
 
 teste2e:
