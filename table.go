@@ -25,7 +25,7 @@ type tableListResponse[T Validator] struct {
 
 // NewTable returns a table that wraps a [Client] with type-specific methods.
 func NewTable[T Validator](client *Client, resource string) *Table[T] {
-	return &Table[T]{client: client}
+	return &Table[T]{client: client, resourcePath: resource}
 }
 
 // Client returns the wrapped [Client].
